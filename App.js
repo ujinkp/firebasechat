@@ -4,6 +4,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
+import { Routes } from './screens/Routes';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen';
@@ -11,8 +12,10 @@ import ChatScreen from './screens/ChatScreen';
 import ProfileScreen from './screens/ProfileScreen';
 
 const AppStack = createStackNavigator({
-  Home: HomeScreen,
-  Chat: ChatScreen,
+  // Home: HomeScreen,
+  // Chat: ChatScreen,
+  [Routes.Home]: require("./screens/HomeScreen").default,
+  [Routes.Chat]: require("./screens/ChatScreen").default,
 });
 
 AppStack.navigationOptions = ({navigation}) => {
@@ -26,8 +29,10 @@ AppStack.navigationOptions = ({navigation}) => {
 const AuthStack = createStackNavigator({ Login: LoginScreen });
 
 const TabNavigator = createBottomTabNavigator({
-  Chats: AppStack,
-  Profile: ProfileScreen
+  // Chats: AppStack,
+  // Profile: ProfileScreen,
+  [Routes.Chats]: AppStack,
+  [Routes.Profile]: require("./screens/ProfileScreen").default,
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -45,7 +50,8 @@ const TabNavigator = createBottomTabNavigator({
 
 export default createAppContainer(createSwitchNavigator(
   {
-    AuthLoading: AuthLoadingScreen,
+    // AuthLoading: AuthLoadingScreen,
+    [Routes.AuthLoading]: require("./screens/AuthLoadingScreen").default,
     App: TabNavigator,
     Auth: AuthStack,
   },
